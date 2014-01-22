@@ -9,6 +9,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.google.gson.Gson;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -36,12 +39,15 @@ public class LonelyTwitterActivity extends Activity {
 
 		saveButton.setOnClickListener(new View.OnClickListener() {
 
+			@SuppressLint("NewApi")
 			public void onClick(View v) {
 				setResult(RESULT_OK);
 				String text = bodyText.getText().toString();
 				saveInFile(text, new Date(System.currentTimeMillis()));
-				finish();
-
+				setContentView(R.layout.main);
+				//finish();
+				//recreate();
+				((ListView) oldTweetsList.getAdapter()).deferNotifyDataSetChanged();
 			}
 		});
 	}
@@ -78,11 +84,18 @@ public class LonelyTwitterActivity extends Activity {
 	}
 	
 	private void saveInFile(String text, Date date) {
+//		Gson gson = new Gson();
+//		Tweet tweet = new Tweet("My Tweet", "Some date");
+//		System.out.println(gson.toJson(tweet));
+
 		try {
 			FileOutputStream fos = openFileOutput(FILENAME,
 					Context.MODE_APPEND);
-			fos.write(new String(date.toString() + " | " + text)
-					.getBytes());
+			//Original Code
+			//fos.write(new String(date.toString() + " | " + text).getBytes());
+			//Write json tweet
+			//fos.write(gson.toJson(tweet).getBytes());
+			
 			fos.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
