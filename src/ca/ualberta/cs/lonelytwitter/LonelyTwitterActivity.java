@@ -84,9 +84,9 @@ public class LonelyTwitterActivity extends Activity {
 	}
 	
 	private void saveInFile(String text, Date date) {
-//		Gson gson = new Gson();
-//		Tweet tweet = new Tweet("My Tweet", "Some date");
-//		System.out.println(gson.toJson(tweet));
+		Gson gson = new Gson();
+		Tweet tweet = new Tweet(text, date.toString());
+		System.out.println(gson.toJson(tweet));
 
 		try {
 			FileOutputStream fos = openFileOutput(FILENAME,
@@ -94,7 +94,7 @@ public class LonelyTwitterActivity extends Activity {
 			//Original Code
 			//fos.write(new String(date.toString() + " | " + text).getBytes());
 			//Write json tweet
-			//fos.write(gson.toJson(tweet).getBytes());
+			fos.write(gson.toJson(tweet).getBytes());
 			
 			fos.close();
 		} catch (FileNotFoundException e) {
